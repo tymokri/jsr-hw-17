@@ -1,5 +1,8 @@
 import React, {useState} from "react";
-import Item from "./Item";
+import TodoItem from "./TodoItem";
+import uniqid from "uniqid";
+import PropTypes from "prop-types";
+
 
 const TodoBox = () => {
     const [todo, setTodo] = useState('');
@@ -53,9 +56,24 @@ const TodoBox = () => {
                 </form>
             </div>
 
-            <Item valuesFromInput={valuesFromInput} onRemove={handleRemove}/>
+            <div>{
+                valuesFromInput.map((item, index) => {
+                    return (
+                        <TodoItem
+                            onRemove={handleRemove}
+                            index={index}
+                            value={item}
+                            key={uniqid()}
+                        />
+                    )
+                })
+            }</div>
         </div>
     );
+};
+
+TodoItem.propTypes = {
+    valuesFromInput: PropTypes.array,
 };
 
 export default TodoBox;
